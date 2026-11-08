@@ -31,7 +31,7 @@ import com.android.tools.smali.dexlib2.iface.instruction.WideLiteralInstruction
 @Suppress("unused")
 val playbackSpeedPatch = bytecodePatch(
     name = "Playback speed",
-    description = "Unhides the player's speed menu and fills it out to 1.5x-3.0x.",
+    description = "Unhides the player's speed menu and fills it out to 0.5x-3.0x.",
     default = true,
 ) {
     compatibleWith(CRUNCHYROLL)
