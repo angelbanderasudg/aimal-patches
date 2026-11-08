@@ -7,7 +7,7 @@ import java.util.List;
 public final class SpeedHelper {
 
     private static final List<Float> SPEEDS = Arrays.asList(
-        2.0f, 1.75f, 1.5f, 1.25f, 1.0f, 0.75f, 0.5f
+        3.0f, 2.75f, 2.5f, 2.25f, 2.0f, 1.75f, 1.5f, 1.25f, 1.0f, 0.75f, 0.5f
     );
 
     public static void replaceSpeedList(Object viewModel) {

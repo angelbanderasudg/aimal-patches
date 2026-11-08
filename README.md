@@ -64,7 +64,7 @@ merge them for you.
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Aspect ratio control](#aspect-ratio-control) | Adds a Fit/Stretch toggle to the player. |  |
-| [Playback speed](#playback-speed) | Unhides the player's speed menu and fills it out to 0.5x-2.0x. |  |
+| [Playback speed](#playback-speed) | Unhides the player's speed menu and fills it out to 0.5x-3.0x. |  |
 | [Subtitle styling](#subtitle-styling) | Adds subtitle size, font and outline controls to the player. |  |
 
 </details>
