@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-11-08T16:29:31",
-  "description": "## [1.0.1](https://github.com/angelbanderasudg/aimal-patches/compare/v1.0.0...v1.0.1) (2026-11-08)\n\n\n### Bug Fixes\n\n* remove dev backmerge and upload artifact on build ([12aa198](https://github.com/angelbanderasudg/aimal-patches/commit/12aa198fcda13ec3975ce8e44d20df86ae115e1a))",
-  "download_url": "https://github.com/angelbanderasudg/aimal-patches/releases/download/v1.0.1/patches-1.0.1.mpp",
+  "created_at": "2026-11-08T17:09:25",
+  "description": "## [1.0.2](https://github.com/angelbanderasudg/aimal-patches/compare/v1.0.1...v1.0.2) (2026-11-08)\n\n\n### Bug Fixes\n\n* **ci:** avoid duplicate artifact upload and overwrite on conflict ([825bb4e](https://github.com/angelbanderasudg/aimal-patches/commit/825bb4e4a4031e373799caec39ffbcff643d746a))",
+  "download_url": "https://github.com/angelbanderasudg/aimal-patches/releases/download/v1.0.2/patches-1.0.2.mpp",
   "signature_download_url": "",
-  "version": "1.0.1"
+  "version": "1.0.2"
 }

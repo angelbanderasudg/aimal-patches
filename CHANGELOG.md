@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/angelbanderasudg/aimal-patches/compare/v1.0.1...v1.0.2) (2026-11-08)
+
+
+### Bug Fixes
+
+* **ci:** avoid duplicate artifact upload and overwrite on conflict ([825bb4e](https://github.com/angelbanderasudg/aimal-patches/commit/825bb4e4a4031e373799caec39ffbcff643d746a))
+
 ## [1.0.1](https://github.com/angelbanderasudg/aimal-patches/compare/v1.0.0...v1.0.1) (2026-11-08)
 
 
