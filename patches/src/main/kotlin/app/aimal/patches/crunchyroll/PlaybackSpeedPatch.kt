@@ -62,10 +62,10 @@ val playbackSpeedPatch = bytecodePatch(
 
         // ── 2. Widen the speed table ──
         //
-        // A miss here is not fatal: the menu still works, it just stops at 1.0x.
+        // A miss here is not fatal: the menu still works, it just stops at default speeds.
         // That is why this half returns early rather than throwing.
 
-        // Find FILLED_NEW_ARRAY for [Ljava/lang/Float; containing 1.0f, 0.75f, 0.5f
+        // Find FILLED_NEW_ARRAY for [Ljava/lang/Float; containing speed literals
         val method = PlayerSettingsViewModelConstructorFingerprint.method
         val instructions = method.implementation!!.instructions.toList()
 
@@ -79,34 +79,47 @@ val playbackSpeedPatch = bytecodePatch(
             val ref = (inst as ReferenceInstruction).reference.toString()
             if (ref != "[Ljava/lang/Float;") continue
 
-            // Verify 0.5f (0x3F000000) appears nearby before this instruction
-            val lookBehind = instructions.subList(maxOf(0, i - 12), i)
-            val has05f = lookBehind.any { la ->
-                la is WideLiteralInstruction && la.wideLiteral.toInt() == 0x3F000000
+            // Verify a speed literal (0.5f, 0.75f, 1.0f, 1.25f, 1.5f) appears nearby before this instruction
+            val lookBehind = instructions.subList(maxOf(0, i - 40), i)
+            val hasSpeedLiteral = lookBehind.any { la ->
+                la is WideLiteralInstruction && (
+                    la.wideLiteral.toInt() == 0x3F000000 || // 0.5f
+                    la.wideLiteral.toInt() == 0x3F400000 || // 0.75f
+                    la.wideLiteral.toInt() == 0x3F800000 || // 1.0f
+                    la.wideLiteral.toInt() == 0x3FA00000 || // 1.25f
+                    la.wideLiteral.toInt() == 0x3FC00000    // 1.5f
+                )
             }
-            if (!has05f) continue
+            if (!hasSpeedLiteral) continue
 
             filledArrayIndex = i
             break
         }
 
-        if (filledArrayIndex == -1) return@execute
-
         // Find iput-object after filled-new-array (stores the LiveData field)
         var iputIndex = -1
-        for (i in filledArrayIndex until minOf(filledArrayIndex + 12, instructions.size)) {
-            if (instructions[i].opcode == Opcode.IPUT_OBJECT) {
-                iputIndex = i
-                break
+        if (filledArrayIndex != -1) {
+            for (i in filledArrayIndex until minOf(filledArrayIndex + 20, instructions.size)) {
+                if (instructions[i].opcode == Opcode.IPUT_OBJECT) {
+                    iputIndex = i
+                    break
+                }
             }
         }
 
-        if (iputIndex == -1) return@execute
+        // Prefer injecting after the iput-object; fall back to right before return-void in <init>
+        val targetIndex = if (iputIndex != -1) {
+            iputIndex + 1
+        } else {
+            instructions.indexOfLast { it.opcode == Opcode.RETURN_VOID }
+        }
 
-        // Inject after the iput-object: call SpeedHelper to replace the list
+        if (targetIndex == -1) return@execute
+
+        // Inject call to SpeedHelper to replace the list
         // p0 = this (PlayerSettingsViewModelImpl)
         method.addInstructions(
-            iputIndex + 1,
+            targetIndex,
             """
                 invoke-static {p0}, Lapp/aimal/extension/crunchyroll/SpeedHelper;->replaceSpeedList(Ljava/lang/Object;)V
             """,
