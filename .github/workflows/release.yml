@@ -36,6 +36,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew :patches:buildAndroid
 
+      - name: Upload patches artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aimal-patches
+          path: patches/build/libs/*.mpp
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
