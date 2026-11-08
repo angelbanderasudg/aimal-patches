@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/angelbanderasudg/aimal-patches/compare/v1.0.0...v1.0.1) (2026-11-08)
+
+
+### Bug Fixes
+
+* remove dev backmerge and upload artifact on build ([12aa198](https://github.com/angelbanderasudg/aimal-patches/commit/12aa198fcda13ec3975ce8e44d20df86ae115e1a))
+
 # 1.0.0 (2026-11-08)
 
 
